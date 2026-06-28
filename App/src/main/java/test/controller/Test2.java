@@ -1,8 +1,8 @@
 package test.controller;
-import etu4112.framework.annotation.*;
+import etu4371.framework.annotation.*;
 @Monannotation
 public class Test2 {
-      @Url("Jouer-liste")
+    @Url("Jouer-liste")
     public void getJouer() {
         // Code futur
     }

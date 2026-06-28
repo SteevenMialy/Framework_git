@@ -1,7 +1,7 @@
 package test.controller;
 
-import etu4112.framework.annotation.Monannotation;
-import etu4112.framework.annotation.Url;
+import etu4371.framework.annotation.Monannotation;
+import etu4371.framework.annotation.Url;
 @Monannotation
 public class Test1 {
     @Url("user-liste")

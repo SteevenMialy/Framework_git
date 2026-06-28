@@ -1,4 +1,4 @@
-package etu4112.framework.model;
+package etu4371.framework.model;
 
 public class Mapping {
     private String className;

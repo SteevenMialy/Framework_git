@@ -1,4 +1,4 @@
-package etu4371.framework.annotation;
+package etu4112.framework.servlet.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

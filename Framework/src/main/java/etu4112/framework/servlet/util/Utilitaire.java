@@ -1,4 +1,4 @@
-package etu4371.framework.util;
+package etu4112.framework.servlet.util;
 
 import java.io.File;
 import java.net.URL;

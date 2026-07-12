@@ -1,4 +1,4 @@
-package etu4371.framework.model;
+package etu4112.framework.servlet.model;
 
 import java.util.Objects;
 

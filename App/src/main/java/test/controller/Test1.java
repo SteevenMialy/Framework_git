@@ -1,16 +1,16 @@
 package test.controller;
 
-import etu4371.framework.annotation.Monannotation;
-import etu4371.framework.annotation.Url;
+import etu4112.framework.servelet.annotation.Monannotation;
+import etu4112.framework.servelt.annotation.Url;
 @Monannotation
 public class Test1 {
     @Url("user-liste")
     public void getToutesLesListes() {
-        // Code futur
+       
     }
 
     @Url("user-delete")
     public void supprimerUtilisateur() {
-        // Code futur
+      
     }
 }

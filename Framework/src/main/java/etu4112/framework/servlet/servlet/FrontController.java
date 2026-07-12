@@ -1,4 +1,4 @@
-package etu4371.framework.servlet;
+package etu4112.framework.servelet.servelet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,10 +6,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 
-import etu4371.framework.annotation.Url;
-import etu4371.framework.model.Mapping;
-import etu4371.framework.model.UrlMethode;
-import etu4371.framework.util.Utilitaire;
+import etu4112.framework.servelet.annotation.Url;
+import etu4112.framework.servelet.model.Mapping;
+import etu4112.framework.servelet.model.UrlMethode;
+import etu4112.framework.servelet.util.Utilitaire;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -123,9 +123,6 @@ public class FrontController extends HttpServlet {
             UrlMethode paramUrlMethode = (urlParam != null && !urlParam.isEmpty()) ? new UrlMethode(urlParam, requestMethod) : null;
             UrlMethode currentUrlMethode = new UrlMethode(urlSaisi, requestMethod);
 
-            // ==========================================
-            // SCÉNARIO 3 : URL corrigée via paramètre
-            // ==========================================
             if (paramUrlMethode != null) {
                 if (this.mappingUrl.containsKey(paramUrlMethode)) {
                     Mapping mapping = this.mappingUrl.get(paramUrlMethode);
@@ -152,9 +149,7 @@ public class FrontController extends HttpServlet {
                     out.println("<p style='color: red;'>⚠️ L'URL de correction '[" + requestMethod + "] /" + urlParam + "' n'est pas valide.</p>");
                 }
             }
-            // ==========================================
-            // SCÉNARIO 1 : URL dans la barre d'adresse
-            // ==========================================
+          
             else if (!urlSaisi.isEmpty() && this.mappingUrl.containsKey(currentUrlMethode)) {
                 Mapping mapping = this.mappingUrl.get(currentUrlMethode);
                 out.println("<div style='border: 2px solid #28a745; background: #e8f5e9; padding: 15px; border-radius: 5px; margin-bottom: 20px;'>");
@@ -187,9 +182,7 @@ public class FrontController extends HttpServlet {
                 }
                 out.println("</table>");
             }
-            // ==========================================
-            // SCÉNARIO 2 : URL vide ou erronée
-            // ==========================================
+           
             else {
                 out.println("<div style='border: 2px solid #dc3545; background: #fdf2f2; padding: 15px; border-radius: 5px;'>");
                 if (urlSaisi.isEmpty()) {

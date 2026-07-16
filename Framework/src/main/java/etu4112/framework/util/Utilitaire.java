@@ -1,12 +1,20 @@
-package etu4112.framework.servlet.util;
+package etu4112.framework.util;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+
+import etu4112.framework.annotation.Monannotation;
+import etu4112.framework.annotation.Url;
+import etu4112.framework.model.Mapping;
+import etu4112.framework.model.UrlMethode;
+
 public class Utilitaire {
     // Cette liste va stocker l'historique du scan pour qu'on puisse comprendre le bug
     public static List<String> debugLogs = new ArrayList<>();
@@ -53,6 +61,52 @@ public class Utilitaire {
             debugLogs.add(sw.toString());
         }
         return annotatedClasses;
+    }
+
+    /**
+     * Sprint 4 - Approche orientée objet : void, passage par référence.
+     * Le HashMap est passé en argument et rempli directement.
+     * Pas de return : quand on modifie le map ici, ça change partout (passage par référence).
+     * 
+     * @param scanPackage  Les packages à scanner, séparés par des virgules
+     * @param mappingUrl   Le HashMap à remplir (passé par référence)
+     */
+    public static void scanAndFillMap(String scanPackage, HashMap<UrlMethode, Mapping> mappingUrl) {
+        System.out.println("[Framework] Sprint 4 - scanAndFillMap (void, passage par référence)...");
+
+        String[] packagesToScan = scanPackage.split(",");
+
+        for (String pack : packagesToScan) {
+            String p = pack.trim();
+            System.out.println("[Framework] Package à scanner : '" + p + "'");
+
+            // Scan des classes annotées @Monannotation
+            List<Class<?>> classes = scanPackageForAnnotation(p, Monannotation.class);
+
+            // Remplissage du map passé par référence (void, pas de return)
+            for (Class<?> clazz : classes) {
+                Method[] methods = clazz.getDeclaredMethods();
+
+                for (Method method : methods) {
+                    if (method.isAnnotationPresent(Url.class)) {
+                        Url urlAnnotation = method.getAnnotation(Url.class);
+                        String urlValue = urlAnnotation.value();
+                        String methodValue = urlAnnotation.method().toUpperCase();
+
+                        UrlMethode urlMethode = new UrlMethode(urlValue, methodValue);
+                        Mapping mapping = new Mapping(clazz.getName(), method.getName());
+
+                        // Passage par référence : on modifie le map directement
+                        mappingUrl.put(urlMethode, mapping);
+
+                        System.out.println("[Framework] Route associée : [" + methodValue + "] /" + urlValue
+                                + " -> " + clazz.getSimpleName() + "." + method.getName() + "()");
+                    }
+                }
+            }
+        }
+
+        System.out.println("[Framework] scanAndFillMap terminé. " + mappingUrl.size() + " route(s).");
     }
 
     private static void findClasses(File directory, String packageName, Class<? extends java.lang.annotation.Annotation> annotationClass, List<Class<?>> annotatedClasses) {
